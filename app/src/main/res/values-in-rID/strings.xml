@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_auto_clear_schedule">Jadwal Pembersihan Otomatis</string>
+    <string name="setting_auto_clear_time">Jam Pembersihan Otomatis</string>
+    <string name="setting_notification">Pemberitahuan</string>
+    <string name="setting_clear_history">Hapus Riwayat</string>
+    <string name="schedule_option_daily">Harian</string>
+    <string name="schedule_option_weekly">Mingguan</string>
+    <string name="schedule_option_monthly">Bulanan</string>
+    <string name="setting_title">Pengaturan</string>
+    <string name="on">Nyala</string>
+    <string name="off">Mati</string>
+</resources>

@@ -1,10 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import kotlinx.android.synthetic.main.settings_activity.*
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -16,10 +17,22 @@ class SettingsActivity : AppCompatActivity() {
             .replace(R.id.settings, SettingsFragment())
             .commit()
 
-//        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = "Setting"
+        supportActionBar!!.title = getString(R.string.setting_title)
+        textView.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Clear History")
+                .setMessage("Do you really want to clear history?")
+                .setPositiveButton(
+                    android.R.string.yes
+                ) { _, _ ->
+
+                }
+                .setNegativeButton(android.R.string.no, null).show()
+        }
+
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -30,6 +43,5 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
-
     }
 }

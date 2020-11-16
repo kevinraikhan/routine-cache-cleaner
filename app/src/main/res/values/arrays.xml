@@ -1,12 +1,54 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="language_entries">
-        <item>English</item>
-        <item>Bahasa Indonesia</item>
+
+    <string-array name="time_entries">
+        <item>00:00</item>
+        <item>02:00</item>
+        <item>04:00</item>
+        <item>06:00</item>
+        <item>08:00</item>
+        <item>10:00</item>
+        <item>12:00</item>
+        <item>14:00</item>
+        <item>16:00</item>
+        <item>18:00</item>
+        <item>20:00</item>
+        <item>22:00</item>
     </string-array>
 
-    <string-array name="language_values">
-        <item>en-us</item>
-        <item>id</item>
+    <string-array name="time_values">
+        <item>0</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+    </string-array>
+
+    <string-array name="schedule_entries">
+        <item>@string/schedule_option_daily</item>
+        <item>@string/schedule_option_weekly</item>
+        <item>@string/schedule_option_monthly</item>
+    </string-array>
+
+    <string-array name="schedule_values">
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+    </string-array>
+
+    <string-array name="on_off_entries">
+        <item>@string/on</item>
+        <item>@string/off</item>
+    </string-array>
+
+    <string-array name="on_off_values">
+        <item>on</item>
+        <item>off</item>
     </string-array>
 </resources>
