@@ -1,21 +1,25 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 
-import android.Manifest
 import android.app.ActivityManager
+import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.text.DecimalFormat
 
 
 class MainActivity : AppCompatActivity() {
+    var pendingIntent: PendingIntent? = null
+    var myReceiver: MyReceiver = MyReceiver()
 
 
     fun floatForm(d: Double): String {
@@ -97,27 +101,58 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    lateinit var historyViewModel: HistoryViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ActivityCompat.requestPermissions(
-            this@MainActivity,
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
 
-            ), 1
-        )
-        buttonA.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            Toast.makeText(this, "Hello Javatpoint", Toast.LENGTH_SHORT).show()
+        // COBA COBA VIEWMODEL
+        historyViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(HistoryViewModel::class.java)
+        historyViewModel.getAllHistory()?.observe(this, Observer {
+            Toast.makeText(this, "onChanged BRUBAH", Toast.LENGTH_SHORT).show()
+            it.forEach {
+                var awal:String = textViewCacheSize.text.toString()
+                textViewCacheSize.text = awal + "${it.title} | ${it.time}"
+            }
+        })
+        abc.setOnClickListener {
+            historyViewModel.insert(History(2, "[HALO]", 33, 2222))
 
         }
 
-        val resultnya = "Total : ${bytesToHuman(totalMemory())} | Free : ${bytesToHuman(freeMemory())}\n\nTotal : ${bytesToHuman(totalMemoryExt() ?: 0)} | Free : ${bytesToHuman(freeMemoryExt() ?: 0)}\n\nTotal RAM : ${bytesToHuman(getMemorySizeInBytes())} | Available RAM : ${bytesToHuman(getMemoryAvailInBytes())}"
-        abc.text = resultnya
+
+        // LOGIC SEE MEMORY AND CLEAR CACHE
+//        ActivityCompat.requestPermissions(
+//            this@MainActivity,
+//            arrayOf(
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE
+//
+//            ), 1
+//        )
+//        buttonA.setOnClickListener {
+//            val intent = Intent(this, SettingsActivity::class.java)
+//            startActivity(intent)
+//            Toast.makeText(this, "Hello Javatpoint", Toast.LENGTH_SHORT).show()
+//
+//        }
+//
+//        abc.setOnClickListener {
+////            startService(Intent(this, MyService::class.java))
+//            val myIntent = Intent(this@MainActivity, MyService::class.java)
+//            pendingIntent = PendingIntent.getService(this@MainActivity, 0, myIntent, 0)
+//            val alarmManager =
+//                getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//            val calendar: Calendar = Calendar.getInstance()
+//            calendar.timeInMillis = System.currentTimeMillis()
+//            calendar.add(Calendar.SECOND, 12)
+////            alarmManager[AlarmManager.RTC_WAKEUP, calendar.timeInMillis] = pendingIntent
+//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, 15000, pendingIntent)
+//            Toast.makeText(this@MainActivity, "Starting Service Alarm", Toast.LENGTH_LONG).show()
+//        }
+//
+//        val resultnya = "Total : ${bytesToHuman(totalMemory())} | Free : ${bytesToHuman(freeMemory())}\n\nTotal : ${bytesToHuman(totalMemoryExt() ?: 0)} | Free : ${bytesToHuman(freeMemoryExt() ?: 0)}\n\nTotal RAM : ${bytesToHuman(getMemorySizeInBytes())} | Available RAM : ${bytesToHuman(getMemoryAvailInBytes())}"
+//        abc.text = resultnya
     }
 
     fun calculateCache(): Long {
@@ -166,4 +201,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(myReceiver, filter)
+    }
+
 }
