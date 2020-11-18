@@ -6,10 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [History::class], version = 1)
+@Database(entities = [History::class, Ram::class, Storage::class], version = 8)
 abstract class HistoryDatabase : RoomDatabase() {
 
     abstract fun historyDao(): HistoryDao?
+    abstract fun ramDao(): RamDao?
+    abstract fun storageDao(): StorageDao?
+
 
     companion object {
         private var instance: HistoryDatabase? = null

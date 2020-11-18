@@ -8,10 +8,12 @@ import androidx.room.Query
 
 
 @Dao
-interface HistoryDao {
+interface RamDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHistory(history: History)
+    fun insertRam(ram: Ram)
 
-    @Query("SELECT * FROM history_table ORDER BY time DESC")
-    open fun getAllHistory(): LiveData<MutableList<History>>
+    @Query("SELECT * FROM ram_table ORDER BY id DESC")
+    fun getAllRam(): LiveData<MutableList<Ram>>
+
+
 }

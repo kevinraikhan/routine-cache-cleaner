@@ -16,7 +16,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun insert(history: History?) {
-        repository!!.insert(history)
+        repository!!.insertHistory(history)
     }
 
     fun getAllHistory(): LiveData<MutableList<History>>? {

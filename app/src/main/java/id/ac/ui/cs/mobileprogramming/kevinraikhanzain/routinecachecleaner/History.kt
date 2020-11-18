@@ -6,8 +6,9 @@ import java.sql.Time
 
 @Entity(tableName = "history_table")
 data class History(
-    @PrimaryKey(autoGenerate = true) var id: Int,
+
     var title: String?,
     var amountCleared: Int,
-    var time: Long
+    var time: Long,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
 )

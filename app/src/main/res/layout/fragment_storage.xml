@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:orientation="vertical"
+    tools:context=".StorageFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewInternalStorageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Internal Storage" />
+
+        <ProgressBar
+            android:id="@+id/determinateBarInternalStorage"
+            style="@style/CustomProgressBarHorizontal"
+
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:progress="80" />
+
+        <TextView
+            android:id="@+id/textViewInternalStorageFree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewInternalStorageUsed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewInternalStorageTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

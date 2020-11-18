@@ -1,125 +1,77 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 
-import android.app.ActivityManager
+import MainPageViewPagerAdapter
 import android.app.PendingIntent
-import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.text.DecimalFormat
 
 
 class MainActivity : AppCompatActivity() {
     var pendingIntent: PendingIntent? = null
-    var myReceiver: MyReceiver = MyReceiver()
+//    var myReceiver: MyReceiver = MyReceiver()
 
-
-    fun floatForm(d: Double): String {
-        return DecimalFormat("#.##").format(d)
-    }
-
-    fun getMemorySizeInBytes(): Long {
-        val context = applicationContext
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val memoryInfo = ActivityManager.MemoryInfo()
-        activityManager.getMemoryInfo(memoryInfo)
-        return memoryInfo.totalMem
-    }
-
-    fun getMemoryAvailInBytes(): Long {
-        val context = applicationContext
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val memoryInfo = ActivityManager.MemoryInfo()
-        activityManager.getMemoryInfo(memoryInfo)
-        return memoryInfo.availMem
-    }
-
-
-    fun bytesToHuman(size: Long): String? {
-        val Kb = 1 * 1024.toLong()
-        val Mb = Kb * 1024
-        val Gb = Mb * 1024
-        val Tb = Gb * 1024
-        val Pb = Tb * 1024
-        val Eb = Pb * 1024
-        if (size < Kb) return floatForm(size.toDouble()) + " byte"
-        if (size >= Kb && size < Mb) return floatForm(size.toDouble() / Kb) + " Kb"
-        if (size >= Mb && size < Gb) return floatForm(size.toDouble() / Mb) + " Mb"
-        if (size >= Gb && size < Tb) return floatForm(size.toDouble() / Gb) + " Gb"
-        if (size >= Tb && size < Pb) return floatForm(size.toDouble() / Tb) + " Tb"
-        if (size >= Pb && size < Eb) return floatForm(size.toDouble() / Pb) + " Pb"
-        return if (size >= Eb) floatForm(size.toDouble() / Eb) + " Eb" else "???"
-    }
-
-    /*************************************************************************************************
-     * Returns size in bytes.
-     *
-     * If you need calculate external memory, change this:
-     * StatFs statFs = new StatFs(Environment.getRootDirectory().getAbsolutePath());
-     * to this:
-     * StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath());
-     */
-    fun totalMemory(): Long {
-//        val statFs = StatFs(Environment.getDataDirectory().absolutePath)
-//        return statFs.blockCountLong * statFs.blockSizeLong
-        return Environment.getDataDirectory().totalSpace
-    }
-
-    fun freeMemory(): Long {
-//        val statFs = StatFs(Environment.getDataDirectory().absolutePath)
-//        return statFs.availableBlocksLong * statFs.blockSizeLong
-        return Environment.getDataDirectory().freeSpace
-    }
-    fun totalMemoryExt(): Long? {
-        val storage = File("/storage")
-        var sdcardFile: File? = null
-        storage.listFiles()?.forEach {
-            if (it.name != "emulated" && it.name != "self") {
-            sdcardFile = it
-            }
-        }
-        return sdcardFile?.totalSpace
-    }
-
-    fun freeMemoryExt(): Long? {
-        val storage = File("/storage")
-        var sdcardFile: File? = null
-        storage.listFiles()?.forEach {
-            if (it.name != "emulated" && it.name != "self") {
-                sdcardFile = it
-            }
-        }
-        return sdcardFile?.freeSpace
-    }
-
-
-    lateinit var historyViewModel: HistoryViewModel
+        lateinit var historyViewModel: HistoryViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MemoryUtils.getMemorySizeInBytes(applicationContext).toString()
+        val adapter = MainPageViewPagerAdapter(supportFragmentManager)
+        val storageFragment: StorageFragment = StorageFragment()
+        val ramFragment: RamFragment = RamFragment()
+        val historyFragment: HistoryFragment = HistoryFragment()
+        adapter.addFragment(storageFragment, "Storage Detail")
+        adapter.addFragment(ramFragment, "Ram Detail")
+        adapter.addFragment(historyFragment, "History Detail")
+        viewPagerMainPage.adapter = adapter
+        tabLayout.setupWithViewPager(viewPagerMainPage)
 
-        // COBA COBA VIEWMODEL
-        historyViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(HistoryViewModel::class.java)
-        historyViewModel.getAllHistory()?.observe(this, Observer {
-            Toast.makeText(this, "onChanged BRUBAH", Toast.LENGTH_SHORT).show()
-            it.forEach {
-                var awal:String = textViewCacheSize.text.toString()
-                textViewCacheSize.text = awal + "${it.title} | ${it.time}"
-            }
-        })
-        abc.setOnClickListener {
-            historyViewModel.insert(History(2, "[HALO]", 33, 2222))
 
+
+        textViewTimeOfAutoClean.setOnClickListener {
+            val serviceIntent = Intent(this, MyService::class.java)
+            ContextCompat.startForegroundService(this, serviceIntent)
+        }
+        buttonClearNow.setOnClickListener {
+            val serviceIntent = Intent(this, MyService::class.java)
+            stopService(serviceIntent)
         }
 
+        historyViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(HistoryViewModel::class.java)
+        textViewAutoClear.setOnClickListener {
+            historyViewModel.insert(History("ABC", 1000, 20))
+            Toast.makeText(this, "KEPENCET GAN ", Toast.LENGTH_SHORT).show()
+        }
+
+//        val adapterHistory = HistoryAdapter()
+//        recycler_view.layoutManager = LinearLayoutManager(this)
+//        recycler_view.setHasFixedSize(true)
+//        recycler_view.adapter = adapterHistory
+//        // COBA COBA VIEWMODEL
+//        historyViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(HistoryViewModel::class.java)
+//        historyViewModel.getAllHistory()?.observe(this, Observer {
+//            Toast.makeText(this, "onChanged BRUBAH", Toast.LENGTH_SHORT).show()
+//            var theResult: String = ""
+//            it.forEach {
+//                theResult += "[${it.title} | ${it.time}] "
+//            }
+//            adapterHistory.setHistory(it)
+//            textViewCacheSize.text = theResult
+//        })
+//        textViewAutoClear.setOnClickListener {
+//            historyViewModel.insert(History("ABC", 1000, 20))
+//            Toast.makeText(this, "KEPENCET GAN ", Toast.LENGTH_SHORT).show()
+//        }
+
+        // END OF COBA COBA VIEWMODEL
 
         // LOGIC SEE MEMORY AND CLEAR CACHE
 //        ActivityCompat.requestPermissions(
@@ -151,19 +103,25 @@ class MainActivity : AppCompatActivity() {
 //            Toast.makeText(this@MainActivity, "Starting Service Alarm", Toast.LENGTH_LONG).show()
 //        }
 //
-//        val resultnya = "Total : ${bytesToHuman(totalMemory())} | Free : ${bytesToHuman(freeMemory())}\n\nTotal : ${bytesToHuman(totalMemoryExt() ?: 0)} | Free : ${bytesToHuman(freeMemoryExt() ?: 0)}\n\nTotal RAM : ${bytesToHuman(getMemorySizeInBytes())} | Available RAM : ${bytesToHuman(getMemoryAvailInBytes())}"
-//        abc.text = resultnya
+////        val resultnya = "Total : ${bytesToHuman(totalMemory())} | Free : ${bytesToHuman(freeMemory())}\n\nTotal : ${bytesToHuman(totalMemoryExt() ?: 0)} | Free : ${bytesToHuman(freeMemoryExt() ?: 0)}\n\nTotal RAM : ${bytesToHuman(getMemorySizeInBytes())} | Available RAM : ${bytesToHuman(getMemoryAvailInBytes())}"
+//        abc.text = bytesToHuman(calculateCache()).toString()
+//        textViewCacheSize.text = bytesToHuman(calculateCache()).toString()
     }
 
     fun calculateCache(): Long {
         var totalCache: Long = 0
         val dir = File("/sdcard/Android/data")
         dir.listFiles()?.forEach {
-            if (it.name == "cache") {
-                totalCache += calculateDirectorySize(it)
+            Log.d("LOGNYA", "HAHAAAAA NIH ${it.name}")
+            it.listFiles()?.forEach {
+                if (it.name == "cache") {
+                    totalCache += calculateDirectorySize(it)
+                }
             }
+
         }
-        return (totalCache / 1024)
+
+        return totalCache
     }
 
     // Returned directory size in byte
@@ -205,7 +163,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        registerReceiver(myReceiver, filter)
+//        registerReceiver(myReceiver, filter)
     }
 
 }
