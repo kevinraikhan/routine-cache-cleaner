@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data
 
 import android.app.Application
 import android.os.AsyncTask
@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 
 
-class HistoryRepository(var application: Application) {
+class Repository(var application: Application) {
     private var historyDao: HistoryDao? = null
     private var ramDao: RamDao? = null
     private var storageDao: StorageDao? = null
@@ -15,25 +15,31 @@ class HistoryRepository(var application: Application) {
     private var allStorage: LiveData<MutableList<Storage>>? = null
 
     init {
-        var historyDb: HistoryDatabase = HistoryDatabase.getInstance(application)!!
-        historyDao = historyDb.historyDao()
-        ramDao = historyDb.ramDao()
-        storageDao = historyDb.storageDao()
+        var db: CacheDatabase = CacheDatabase.getInstance(application)!!
+        historyDao = db.historyDao()
+        ramDao = db.ramDao()
+        storageDao = db.storageDao()
         allHistory = historyDao?.getAllHistory()
         allRam = ramDao?.getAllRam()
         allStorage = storageDao?.getAllStorage()
     }
 
     fun insertHistory(history: History?) {
-        InsertHistoryAsyncTask(historyDao).execute(history)
+        InsertHistoryAsyncTask(
+            historyDao
+        ).execute(history)
     }
 
     fun insertRam(ram: Ram?) {
-        InsertRamAsyncTask(ramDao).execute(ram)
+        InsertRamAsyncTask(
+            ramDao
+        ).execute(ram)
     }
 
     fun insertStorage(storage: Storage?) {
-        InsertStorageAsyncTask(storageDao).execute(storage)
+        InsertStorageAsyncTask(
+            storageDao
+        ).execute(storage)
     }
 
     fun getAllHistory(): LiveData<MutableList<History>>? {

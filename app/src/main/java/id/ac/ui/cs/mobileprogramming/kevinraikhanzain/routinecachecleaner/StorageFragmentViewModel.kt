@@ -1,14 +1,16 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.Repository
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.Storage
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.MemoryUtils
 
 class StorageFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private var repository: HistoryRepository? = null
+    private var repository: Repository? = null
     private var allStorage: LiveData<MutableList<Storage>>? = null
 
     fun calculateInternalStorage() {
@@ -33,7 +35,10 @@ class StorageFragmentViewModel(application: Application) : AndroidViewModel(appl
 
 
     init {
-        repository = HistoryRepository(getApplication())
+        repository =
+            Repository(
+                getApplication()
+            )
         allStorage = repository!!.getAllStorage()
     }
 

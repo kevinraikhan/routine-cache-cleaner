@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.service
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 
 import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.App.Companion.CHANNEL_ID
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.MainActivity
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.R
 
 
 class MyService : Service() {

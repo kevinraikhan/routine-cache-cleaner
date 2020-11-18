@@ -1,13 +1,13 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.StringUtils
 import kotlinx.android.synthetic.main.fragment_storage.*
 
 class StorageFragment : Fragment() {
@@ -35,7 +35,7 @@ class StorageFragment : Fragment() {
                 textViewInternalStorageFree.text = "Free : " + StringUtils.bytesToHuman(it.internalFree ?: 0)
                 textViewInternalStorageUsed.text = "Used : " + StringUtils.bytesToHuman(it.internalUsed ?: 0)
                 textViewInternalStorageTotal.text = "Total : " + StringUtils.bytesToHuman(it.internalTotal ?: 0)
-                determinateBarInternalStorage.progress = ((it.internalFree!!.toDouble() / it.internalTotal!!) * 100).toInt()
+                determinateBarInternalStorage.progress = ((it.internalUsed!!.toDouble() / it.internalTotal!!) * 100).toInt()
             }
         })
         viewModel.calculateInternalStorage()

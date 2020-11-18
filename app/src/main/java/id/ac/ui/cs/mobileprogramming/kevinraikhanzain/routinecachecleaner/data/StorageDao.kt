@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

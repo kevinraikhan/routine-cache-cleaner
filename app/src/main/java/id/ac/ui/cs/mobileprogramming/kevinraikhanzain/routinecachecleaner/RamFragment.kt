@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.StringUtils
 import kotlinx.android.synthetic.main.fragment_ram.*
 
 
@@ -39,7 +40,7 @@ class RamFragment : Fragment() {
                 textViewRamFree.text = "Free : " + StringUtils.bytesToHuman(it.free ?: 0)
                 textViewRamUsed.text = "Used : " + StringUtils.bytesToHuman(it.used ?: 0)
                 textViewRamTotal.text = "Total : " + StringUtils.bytesToHuman(it.total ?: 0)
-                determinateBarRam.progress = ((it.free!!.toDouble() / it.total!!) * 100).toInt()
+                determinateBarRam.progress = ((it.used!!.toDouble() / it.total!!) * 100).toInt()
             }
         })
         viewModel.calculateInternalStorage()

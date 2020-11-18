@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

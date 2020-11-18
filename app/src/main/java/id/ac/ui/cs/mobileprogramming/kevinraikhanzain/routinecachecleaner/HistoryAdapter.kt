@@ -1,11 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 
-import android.provider.ContactsContract.CommonDataKinds.Note
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.History
 import kotlinx.android.synthetic.main.history_item.view.*
 
 

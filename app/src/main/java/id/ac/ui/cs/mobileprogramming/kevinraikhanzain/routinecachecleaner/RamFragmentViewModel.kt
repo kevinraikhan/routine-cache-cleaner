@@ -3,9 +3,12 @@ package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.Repository
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.Ram
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.MemoryUtils
 
 class RamFragmentViewModel(application: Application) : AndroidViewModel(application) {
-    private var repository: HistoryRepository? = null
+    private var repository: Repository? = null
     private var allRam: LiveData<MutableList<Ram>>? = null
 
     fun calculateInternalStorage() {
@@ -13,12 +16,21 @@ class RamFragmentViewModel(application: Application) : AndroidViewModel(applicat
         val totalMem = MemoryUtils.getMemorySizeInBytes(getApplication())
         val usedMem = totalMem - freeMem
 
-        insert(Ram(freeMem, totalMem, usedMem))
+        insert(
+            Ram(
+                freeMem,
+                totalMem,
+                usedMem
+            )
+        )
     }
 
 
     init {
-        repository = HistoryRepository(getApplication())
+        repository =
+            Repository(
+                getApplication()
+            )
         allRam = repository!!.getAllRam()
     }
 
