@@ -3,7 +3,6 @@ package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import java.io.File
 
 class MemoryUtils {
@@ -75,7 +74,6 @@ class MemoryUtils {
             var result: Long = 0
             if (dir.exists()) {
                 dir.listFiles()?.forEach {
-                    Log.d("LOGNYA", "JALAN NIH ${it.name}")
                     result += if (it.isDirectory) {
                         calculateDirectorySize(it)
                     } else {
@@ -89,7 +87,7 @@ class MemoryUtils {
         }
 
 
-        fun deleteCache() {
+        fun clearCache() {
             val dir = File("/sdcard/Android/data")
             dir?.listFiles().forEach {
                 it?.listFiles()?.forEach {

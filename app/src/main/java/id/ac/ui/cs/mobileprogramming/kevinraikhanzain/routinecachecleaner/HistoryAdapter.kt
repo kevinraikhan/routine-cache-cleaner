@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.History
+import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.StringUtils
 import kotlinx.android.synthetic.main.history_item.view.*
 
 
@@ -22,9 +23,10 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
     }
 
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
-        var currentHistory: History = histories.get(position)
-        holder.textViewTitle.text = currentHistory.title
-        holder.textViewDescription.text = currentHistory.amountCleared.toString()
+        val currentHistory: History = histories[position]
+
+        holder.textViewTitle.text = StringUtils.bytesToHuman(currentHistory.amountCleared.toLong())
+        holder.textViewDescription.text = StringUtils.milisToDateString(currentHistory.time)
     }
 
     fun setHistory(histories: List<History>) {
@@ -36,6 +38,4 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
         var textViewTitle: TextView = itemView.text_view_title
         var textViewDescription: TextView = itemView.text_view_description
     }
-
-
 }

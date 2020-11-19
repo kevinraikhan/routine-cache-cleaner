@@ -13,5 +13,8 @@ interface HistoryDao {
     fun insertHistory(history: History)
 
     @Query("SELECT * FROM history_table ORDER BY time DESC")
-    open fun getAllHistory(): LiveData<MutableList<History>>
+    fun getAllHistory(): LiveData<MutableList<History>>
+
+    @Query("DELETE FROM history_table")
+    fun deleteAllHistory()
 }

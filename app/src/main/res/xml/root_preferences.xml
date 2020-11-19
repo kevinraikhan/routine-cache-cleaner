@@ -1,31 +1,3 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ListPreference
-        app:defaultValue="daily"
-        app:entries="@array/schedule_entries"
-        app:entryValues="@array/schedule_values"
-        app:iconSpaceReserved="false"
-        app:key="schedule"
-        app:title="@string/setting_auto_clear_schedule"
-        app:useSimpleSummaryProvider="true" />
-
-    <ListPreference
-        app:defaultValue="2"
-        app:entries="@array/time_entries"
-        app:entryValues="@array/time_values"
-        app:iconSpaceReserved="false"
-        app:key="time"
-        app:title="@string/setting_auto_clear_time"
-        app:useSimpleSummaryProvider="true" />
-
-    <ListPreference
-        app:defaultValue="on"
-        app:entries="@array/on_off_entries"
-        app:entryValues="@array/on_off_values"
-        app:iconSpaceReserved="false"
-        app:key="notification_on_off"
-        app:title="@string/setting_notification"
-        app:useSimpleSummaryProvider="true" />
-
-    <PreferenceCategory />
+<PreferenceScreen>
 
 </PreferenceScreen>

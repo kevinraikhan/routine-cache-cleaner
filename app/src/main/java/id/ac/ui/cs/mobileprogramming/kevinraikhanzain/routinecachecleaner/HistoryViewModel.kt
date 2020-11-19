@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.History
 import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.Repository
+import kotlin.concurrent.thread
 
 
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,4 +28,6 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     fun getAllHistory(): LiveData<MutableList<History>>? {
         return allHistory
     }
+
+
 }

@@ -15,19 +15,19 @@ abstract class CacheDatabase : RoomDatabase() {
 
 
     companion object {
-        private var instance: id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.CacheDatabase? = null
+        private var instance: CacheDatabase? =
+            null
 
         @Synchronized
-        fun getInstance(context: Context): id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.CacheDatabase? {
+        fun getInstance(context: Context): CacheDatabase? {
             if (instance == null) {
-                instance = Room.databaseBuilder<id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data.CacheDatabase>(
-                    context.applicationContext,
-                    CacheDatabase::class.java, "history_database"
-                ).fallbackToDestructiveMigration().build()
+                instance =
+                    Room.databaseBuilder<CacheDatabase>(
+                        context.applicationContext,
+                        CacheDatabase::class.java, "history_database"
+                    ).fallbackToDestructiveMigration().build()
             }
             return instance
         }
     }
-
-
 }

@@ -2,8 +2,8 @@ package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.data
 
 import android.app.Application
 import android.os.AsyncTask
-import android.util.Log
 import androidx.lifecycle.LiveData
+import kotlin.concurrent.thread
 
 
 class Repository(var application: Application) {
@@ -54,6 +54,12 @@ class Repository(var application: Application) {
         return allStorage
     }
 
+    fun deleteAllHistory() {
+        thread {
+            historyDao?.deleteAllHistory()
+        }
+    }
+
     class InsertHistoryAsyncTask(var historyDao: HistoryDao?) : AsyncTask<History, Void, Void>() {
         override fun doInBackground(vararg history: History?): Void? {
             historyDao?.insertHistory(history[0]!!)
@@ -71,7 +77,6 @@ class Repository(var application: Application) {
     class InsertStorageAsyncTask(var storageDao: StorageDao?) : AsyncTask<Storage, Void, Void>() {
         override fun doInBackground(vararg storage: Storage?): Void? {
             storageDao?.insertStorage(storage[0]!!)
-            Log.d("LOGNYA", "InsertStorageAsyncTask()")
             return null
         }
     }

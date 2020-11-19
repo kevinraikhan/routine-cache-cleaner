@@ -13,6 +13,7 @@
         style="@android:style/TextAppearance"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"
         android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
         android:text="@string/setting_clear_history" />

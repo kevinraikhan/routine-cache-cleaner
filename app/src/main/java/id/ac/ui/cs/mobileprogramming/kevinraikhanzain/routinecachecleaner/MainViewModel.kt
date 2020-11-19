@@ -9,4 +9,9 @@ class MainViewModel : ViewModel() {
     fun calculateCache() {
         cacheSize.value = MemoryUtils.calculateCache()
     }
+
+    fun clearCache() {
+        MemoryUtils.clearCache()
+        calculateCache()
+    }
 }
