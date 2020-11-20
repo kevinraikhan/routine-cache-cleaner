@@ -95,6 +95,10 @@ class MainActivity : AppCompatActivity() {
                 calendar.set(Calendar.MINUTE, 0)
                 calendar.set(Calendar.HOUR_OF_DAY, 2)
 
+                if (calendar.before(Calendar.getInstance())) {
+                    calendar.add(Calendar.DATE, 1)
+
+                }
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
