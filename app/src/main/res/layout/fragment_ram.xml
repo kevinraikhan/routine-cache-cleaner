@@ -18,7 +18,7 @@
             android:id="@+id/textViewRamTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RAM" />
+            android:text="@string/RAM" />
 
         <ProgressBar
             android:id="@+id/determinateBarRam"

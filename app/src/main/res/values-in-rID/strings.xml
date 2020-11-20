@@ -10,4 +10,16 @@
     <string name="setting_title">Pengaturan</string>
     <string name="on">Nyala</string>
     <string name="off">Mati</string>
+    <string name="clear_now">BERSIHKAN SEKARANG</string>
+    <string name="auto_clear">Pembersih Otomatis</string>
+    <string name="clear_time">Setiap Hari jam 02:00</string>
+    <string name="RAM">RAM</string>
+    <string name="internal_storage">Penyimpanan Internal</string>
+    <string name="free">"Bebas : "</string>
+    <string name="used">"Digunakan : "</string>
+    <string name="total">"total : "</string>
+    <string name="share_history">Bagikan Riwayat</string>
+    <string name="storage_detail">Detil Penyimpanan</string>
+    <string name="ram_detail">Detil Ram</string>
+    <string name="history">Riwayat</string>
 </resources>

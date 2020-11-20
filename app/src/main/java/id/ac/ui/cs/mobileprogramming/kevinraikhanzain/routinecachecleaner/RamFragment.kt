@@ -37,9 +37,9 @@ class RamFragment : Fragment() {
 
         viewModel.getAllStorage()?.observe(this, Observer {
             it.forEach {
-                textViewRamFree.text = "Free : " + StringUtils.bytesToHuman(it.free ?: 0)
-                textViewRamUsed.text = "Used : " + StringUtils.bytesToHuman(it.used ?: 0)
-                textViewRamTotal.text = "Total : " + StringUtils.bytesToHuman(it.total ?: 0)
+                textViewRamFree.text = getString(R.string.free) + StringUtils.bytesToHuman(it.free ?: 0)
+                textViewRamUsed.text = getString(R.string.used) + StringUtils.bytesToHuman(it.used ?: 0)
+                textViewRamTotal.text = getString(R.string.total) + StringUtils.bytesToHuman(it.total ?: 0)
                 determinateBarRam.progress = ((it.used!!.toDouble() / it.total!!) * 100).toInt()
             }
         })

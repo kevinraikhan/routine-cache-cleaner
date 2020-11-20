@@ -72,11 +72,11 @@ class SettingsActivity : AppCompatActivity() {
 
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "This is one image I'm sharing.")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "")
             shareIntent.putExtra(Intent.EXTRA_STREAM, path)
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             shareIntent.type = "text/html"
-            startActivity(Intent.createChooser(shareIntent, "Share..."))
+            startActivity(Intent.createChooser(shareIntent, ""))
         }
     }
 

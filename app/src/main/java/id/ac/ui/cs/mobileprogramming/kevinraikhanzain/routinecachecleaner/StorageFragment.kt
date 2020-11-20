@@ -32,9 +32,9 @@ class StorageFragment : Fragment() {
 
         viewModel.getAllStorage()?.observe(this, Observer {
             it.forEach {
-                textViewInternalStorageFree.text = "Free : " + StringUtils.bytesToHuman(it.internalFree ?: 0)
-                textViewInternalStorageUsed.text = "Used : " + StringUtils.bytesToHuman(it.internalUsed ?: 0)
-                textViewInternalStorageTotal.text = "Total : " + StringUtils.bytesToHuman(it.internalTotal ?: 0)
+                textViewInternalStorageFree.text =  getString(R.string.free) + StringUtils.bytesToHuman(it.internalFree ?: 0)
+                textViewInternalStorageUsed.text =  getString(R.string.used) + StringUtils.bytesToHuman(it.internalUsed ?: 0)
+                textViewInternalStorageTotal.text =  getString(R.string.total) + StringUtils.bytesToHuman(it.internalTotal ?: 0)
                 determinateBarInternalStorage.progress = ((it.internalUsed!!.toDouble() / it.internalTotal!!) * 100).toInt()
             }
         })

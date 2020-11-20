@@ -129,9 +129,9 @@ class MainActivity : AppCompatActivity() {
         val storageFragment = StorageFragment()
         val ramFragment = RamFragment()
         val historyFragment = HistoryFragment()
-        adapter.addFragment(storageFragment, "Storage Detail")
-        adapter.addFragment(ramFragment, "Ram Detail")
-        adapter.addFragment(historyFragment, "History Detail")
+        adapter.addFragment(storageFragment, getString(R.string.storage_detail))
+        adapter.addFragment(ramFragment, getString(R.string.ram_detail))
+        adapter.addFragment(historyFragment, getString(R.string.history))
         viewPagerMainPage.adapter = adapter
         tabLayout.setupWithViewPager(viewPagerMainPage)
     }

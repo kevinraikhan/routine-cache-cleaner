@@ -18,7 +18,7 @@
             android:id="@+id/textViewInternalStorageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Internal Storage" />
+            android:text="@string/internal_storage" />
 
         <ProgressBar
             android:id="@+id/determinateBarInternalStorage"

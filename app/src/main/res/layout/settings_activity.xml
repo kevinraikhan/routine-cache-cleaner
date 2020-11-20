@@ -16,7 +16,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"
         android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:text="Share History" />
+        android:text="@string/share_history" />
 
     <TextView
         android:id="@+id/textViewClearHistory"
