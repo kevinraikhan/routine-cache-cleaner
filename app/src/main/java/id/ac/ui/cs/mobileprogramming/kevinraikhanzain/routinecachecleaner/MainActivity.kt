@@ -6,6 +6,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,20 +19,29 @@ import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.S
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
+
 const val ONE_DAY_MILIS: Long = 1000 * 60 * 60 * 24
+const val IS_AUTO_CLEAN_ON: String = "IS_AUTO_CLEAN_ON"
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var sharedPref: SharedPreferences
 
     private var pendingIntent: PendingIntent? = null
     private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        sharedPref =
+            this@MainActivity.getPreferences(Context.MODE_PRIVATE)
+
+
         requestPermission()
         initViewModel()
         initView()
         initClickListener()
-        garbage() // DELETE THIS
+
+
     }
 
     override fun onResume() {
@@ -55,6 +65,11 @@ class MainActivity : AppCompatActivity() {
             textViewCacheSize.text = StringUtils.bytesToHuman(it)
         })
         initTab()
+
+        val sharedPref = this@MainActivity.getPreferences(Context.MODE_PRIVATE) ?: return
+        val isAutoCleanOn = sharedPref.getBoolean(IS_AUTO_CLEAN_ON, false)
+        switchAutoClean.isChecked = isAutoCleanOn
+        onSwitchClicked(isAutoCleanOn)
     }
 
     private fun initViewModel() {
@@ -75,52 +90,62 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchAutoClean.setOnClickListener {
-            val myIntent = Intent(this@MainActivity, MyService::class.java)
-            pendingIntent = PendingIntent.getService(this@MainActivity, 0, myIntent, 0)
-            val alarmManager =
-                getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-            val calendar: Calendar = Calendar.getInstance()
-
-            if ((it as SwitchMaterial).isChecked) {
-                /*
-                *
-                * Set the alarm to start at approximately 2:00 a.m.
-                * Shell command to test this :
-                * adb shell "su 0 toybox date 112000592020.55"
-                * adb shell "su 0 toybox date 112001592020.55"
-                *
-                * */
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.HOUR_OF_DAY, 2)
-
-                if (calendar.before(Calendar.getInstance())) {
-                    calendar.add(Calendar.DATE, 1)
-
-                }
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    ONE_DAY_MILIS,
-                    pendingIntent
-                )
-                Toast.makeText(
-                    this@MainActivity,
-                    "Auto clear is ON",
-                    Toast.LENGTH_LONG
-                ).show()
-
-            } else {
-                alarmManager.cancel(pendingIntent)
-                Toast.makeText(
-                    this@MainActivity,
-                    "Auto clear is OFF",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+            onSwitchClicked((it as SwitchMaterial).isChecked)
         }
+    }
 
+    private fun onSwitchClicked(bool: Boolean) {
+        val myIntent = Intent(this@MainActivity, MyService::class.java)
+        pendingIntent = PendingIntent.getService(this@MainActivity, 0, myIntent, 0)
+        val alarmManager =
+            getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val calendar: Calendar = Calendar.getInstance()
+        if (bool) {
+            /*
+            *
+            * Set the alarm to start at approximately 2:00 a.m.
+            * Shell command to test this :
+            * adb shell "su 0 toybox date 112000592020.55"
+            * adb shell "su 0 toybox date 112001592020.55"
+            *
+            * */
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.HOUR_OF_DAY, 2)
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1)
+
+            }
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                ONE_DAY_MILIS,
+                pendingIntent
+            )
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.auto_on),
+                Toast.LENGTH_LONG
+            ).show()
+
+            val editor = sharedPref.edit()
+            editor.putBoolean(IS_AUTO_CLEAN_ON, true)
+            editor.apply()
+
+        } else {
+            alarmManager.cancel(pendingIntent)
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.auto_off),
+                Toast.LENGTH_LONG
+            ).show()
+
+            val editor = sharedPref.edit()
+            editor.putBoolean(IS_AUTO_CLEAN_ON, false)
+            editor.apply()
+        }
     }
 
 
@@ -134,11 +159,5 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(historyFragment, getString(R.string.history))
         viewPagerMainPage.adapter = adapter
         tabLayout.setupWithViewPager(viewPagerMainPage)
-    }
-
-
-    // DELETE THIS
-    private fun garbage() {
-
     }
 }

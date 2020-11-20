@@ -39,6 +39,8 @@
     <string name="storage_detail">Storage Detail</string>
     <string name="ram_detail">Ram Detail</string>
     <string name="history">History</string>
+    <string name="auto_on">Auto clear ON</string>
+    <string name="auto_off">Auto clear ON</string>
     <string name="notif_content">Its time to clear cache, turn off your screen</string>
 
 </resources>
