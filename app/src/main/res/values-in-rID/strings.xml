@@ -12,7 +12,7 @@
     <string name="off">Mati</string>
     <string name="clear_now">BERSIHKAN SEKARANG</string>
     <string name="auto_clear">Pembersih Otomatis</string>
-    <string name="clear_time">Setiap Hari jam 02:00</string>
+    <string name="clear_time">Setiap 1 menit [Untuk Demonstrasi]</string>
     <string name="RAM">RAM</string>
     <string name="internal_storage">Penyimpanan Internal</string>
     <string name="free">"Bebas : "</string>

@@ -29,7 +29,7 @@
     <string name="off">Off</string>
     <string name="clear_now">CLEAR NOW</string>
     <string name="auto_clear">Auto Clear</string>
-    <string name="clear_time">Everyday at 02:00</string>
+    <string name="clear_time">Every 1 Minute [For Demonstration]</string>
     <string name="RAM">RAM</string>
     <string name="internal_storage">Internal Storage</string>
     <string name="free">Free : </string>
@@ -40,7 +40,7 @@
     <string name="ram_detail">Ram Detail</string>
     <string name="history">History</string>
     <string name="auto_on">Auto clear ON</string>
-    <string name="auto_off">Auto clear ON</string>
+    <string name="auto_off">Auto clear OFF</string>
     <string name="notif_content">Its time to clear cache, turn off your screen</string>
 
 </resources>
