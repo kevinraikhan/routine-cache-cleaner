@@ -1,12 +1,17 @@
 package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util
 
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 // CREDIT : https://stackoverflow.com/a/8826357
 class StringUtils {
+
     companion object {
+        external fun methodJNIMilisToDate(number: Int): String
+
+        init {
+            System.loadLibrary("cpp_code")
+        }
+
         private fun floatForm(d: Double): String {
             return DecimalFormat("#.##").format(d)
         }
@@ -43,10 +48,8 @@ class StringUtils {
         }
 
         fun milisToDateString(milisLong: Long): String {
-            val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm")
-            val calendar: Calendar = Calendar.getInstance()
-            calendar.timeInMillis = milisLong
-            return formatter.format(calendar.time)
+            return methodJNIMilisToDate((milisLong / 1000).toInt())
         }
     }
+
 }

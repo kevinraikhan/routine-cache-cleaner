@@ -4,15 +4,16 @@ import MainPageViewPagerAdapter
 import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.switchmaterial.SwitchMaterial
 import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.service.MyService
 import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.util.StringUtils
@@ -25,6 +26,21 @@ const val DEMO_TIME_ONE_MINUTE: Long = 60000
 const val IS_AUTO_CLEAN_ON: String = "IS_AUTO_CLEAN_ON"
 
 class MainActivity : AppCompatActivity() {
+
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        var isInWaitingToClearCache = false
+        override fun onReceive(context: Context, intent: Intent) {
+            // Get extra data included in the Intent
+            this.isInWaitingToClearCache = intent.getBooleanExtra("WAITING_TO_CLEAR_CACHE", false)
+            if (isInWaitingToClearCache) {
+
+                textViewTimeOfAutoClean.text = "Time to clear cache!"
+            } else {
+                textViewTimeOfAutoClean.text = "Clear cache every 1 minute"
+            }
+        }
+    }
+
     private lateinit var sharedPref: SharedPreferences
 
     private var pendingIntent: PendingIntent? = null
@@ -37,17 +53,52 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity.getPreferences(Context.MODE_PRIVATE)
 
 
-        requestPermission()
+        checkPermission()
         initViewModel()
         initView()
         initClickListener()
 
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mMessageReceiver, IntentFilter("CLEAR_CACHE_PROCESS_STATUS")
+        )
+//        textViewAutoClear.text = methodJNIMilisToDate(20).toString()
     }
 
     override fun onResume() {
         super.onResume()
         mainViewModel.calculateCache()
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        var isHasPermission = true
+        grantResults.forEach {
+            if (it != PackageManager.PERMISSION_GRANTED) {
+                isHasPermission = false
+            }
+        }
+        if (!isHasPermission) {
+            val intent = Intent(this, NoPermissionActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun requestPermission() {
@@ -114,7 +165,6 @@ class MainActivity : AppCompatActivity() {
             calendar.add(Calendar.SECOND, 4)
 
 
-
             // DEMONSTRATION Code Every 2 Minutes
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
@@ -173,4 +223,8 @@ class MainActivity : AppCompatActivity() {
         viewPagerMainPage.adapter = adapter
         tabLayout.setupWithViewPager(viewPagerMainPage)
     }
+
+
+
+
 }

@@ -78,6 +78,11 @@ class SettingsActivity : AppCompatActivity() {
             shareIntent.type = "text/html"
             startActivity(Intent.createChooser(shareIntent, ""))
         }
+
+        textViewAboutMe.setOnClickListener {
+            val intent = Intent(this, AboutMeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
