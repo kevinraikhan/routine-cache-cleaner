@@ -46,7 +46,10 @@ class StringUtils {
                 size.toDouble() / Eb
             ) + " Eb" else "???"
         }
+        /*
+        7) Memanfaatkan JNI (Java Native Interface)
 
+         */
         fun milisToDateString(milisLong: Long): String {
             return methodJNIMilisToDate((milisLong / 1000).toInt())
         }

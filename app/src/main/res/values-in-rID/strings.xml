@@ -22,7 +22,7 @@
     <string name="storage_detail">Detil Penyimpanan</string>
     <string name="ram_detail">Detil Ram</string>
     <string name="history">Riwayat</string>
-    <string name="notif_content">Waktunya bersihkan cache, matikan layar</string>
+    <string name="notif_content">Waktunya bersihkan cache</string>
     <string name="auto_on">Bersihkan otomatis NYALA</string>
     <string name="auto_off">Bersihkan otomatis MATI</string>
 </resources>

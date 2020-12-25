@@ -41,7 +41,7 @@
     <string name="history">History</string>
     <string name="auto_on">Auto clear ON</string>
     <string name="auto_off">Auto clear OFF</string>
-    <string name="notif_content">Its time to clear cache, turn off your screen</string>
+    <string name="notif_content">Its time to clear cache</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

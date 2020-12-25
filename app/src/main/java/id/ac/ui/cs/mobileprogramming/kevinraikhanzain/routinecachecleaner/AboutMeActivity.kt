@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.danefinlay.opengltesting.MyGLSurfaceView
 
 class AboutMeActivity : AppCompatActivity() {
-
+    /*
+    8) Menampilkan animasi dengan OpenGL
+     */
     private var myGLView: MyGLSurfaceView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

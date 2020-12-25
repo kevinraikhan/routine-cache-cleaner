@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (!isHasPermission) {
+            /* 6) Menerapkan runtime permission */
             val intent = Intent(this, NoPermissionActivity::class.java)
             startActivity(intent)
             finish()
@@ -165,28 +166,21 @@ class MainActivity : AppCompatActivity() {
             calendar.add(Calendar.SECOND, 4)
 
 
-            // DEMONSTRATION Code Every 2 Minutes
+
+//             ACTUAL Code EVERYDAY at 02:00
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.HOUR_OF_DAY, 2)
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1)
+
+            }
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
-                DEMO_TIME_ONE_MINUTE,
+                ONE_DAY_MILIS,
                 pendingIntent
             )
-
-            // ACTUAL Code EVERYDAY at 02:00
-//            calendar.set(Calendar.SECOND, 0)
-//            calendar.set(Calendar.MINUTE, 0)
-//            calendar.set(Calendar.HOUR_OF_DAY, 2)
-//            if (calendar.before(Calendar.getInstance())) {
-//                calendar.add(Calendar.DATE, 1)
-//
-//            }
-//            alarmManager.setRepeating(
-//                AlarmManager.RTC_WAKEUP,
-//                calendar.timeInMillis,
-//                ONE_DAY_MILIS,
-//                pendingIntent
-//            )
             Toast.makeText(
                 this@MainActivity,
                 getString(R.string.auto_on),
