@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.openGL
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,9 +18,6 @@ class OpenGlFragment : Fragment() {
         // Create a GLSurfaceView instance and
         myGLView = MyGLSurfaceView(context)
 
-        // Set it as the ContentView for this Activity.
-//        setContentView(myGLView)
-        // Inflate the layout for this fragment
         return myGLView
     }
 

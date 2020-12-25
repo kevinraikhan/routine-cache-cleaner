@@ -1,18 +1,13 @@
-package com.danefinlay.opengltesting
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.openGL
 
 import android.opengl.GLES20
-import com.danefinlay.util.GLESProgram
-import com.danefinlay.util.OpenGLShape
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
-import java.nio.ShortBuffer
 
-/** Shapes to be used with OpenGL ES
- * Created by dane on 4/11/16.
- */
 
-class Triangle : OpenGLShape {
+class Triangle :
+    OpenGLShape {
     private var mPositionHandle: Int = 0
     private var mColorHandle: Int = 0
     private var mMVPMatrixHandle: Int = 0 // Used to access and set the view transformation
@@ -54,9 +49,10 @@ class Triangle : OpenGLShape {
         GLES20.glEnableVertexAttribArray(mPositionHandle)
 
         // Prepare the triangle coordinate data
-        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX,
+        GLES20.glVertexAttribPointer(mPositionHandle,
+            COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
-                vertexStride, vertexBuffer)
+            vertexStride, vertexBuffer)
 
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(programRef, "vColor")
@@ -68,7 +64,8 @@ class Triangle : OpenGLShape {
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0)
 
         // Set color for drawing the triangle
-        GLES20.glUniform4fv(mColorHandle, 1, colour, 0)
+        GLES20.glUniform4fv(mColorHandle, 1,
+            colour, 0)
 
         // Draw the triangle
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount)
