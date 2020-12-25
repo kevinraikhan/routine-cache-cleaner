@@ -1,11 +1,7 @@
-package com.danefinlay.util
+package id.ac.ui.cs.mobileprogramming.kevinraikhanzain.routinecachecleaner.openGL
 
 import android.opengl.GLES20
 import android.util.Log
-import com.danefinlay.opengltesting.sampleFragmentShaderCode
-import com.danefinlay.opengltesting.sampleVertexShaderCode
-import java.io.File
-import java.nio.IntBuffer
 
 
 /** Wrapper data class for OpenGL Shading Language (GLSL) source code */
@@ -20,7 +16,9 @@ data class GLESProgram(val programRef: Int)
  */
 fun createGLESProgram(): GLESProgram {
     // create empty OpenGL ES Program
-    return GLESProgram(GLES20.glCreateProgram())
+    return GLESProgram(
+        GLES20.glCreateProgram()
+    )
 }
 
 /**
@@ -30,11 +28,24 @@ abstract class OpenGLShape {
     protected val myProgram: GLESProgram
 
     constructor(program: GLESProgram,
-                vertexShaderCode: GLSLSourceCode = GLSLSourceCode(sampleVertexShaderCode),
-                fragmentShaderCode: GLSLSourceCode = GLSLSourceCode(sampleFragmentShaderCode)) {
+                vertexShaderCode: GLSLSourceCode = GLSLSourceCode(
+                    sampleVertexShaderCode
+                ),
+                fragmentShaderCode: GLSLSourceCode = GLSLSourceCode(
+                    sampleFragmentShaderCode
+                )
+    ) {
 
-        val vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode)
-        val fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode)
+        val vertexShader =
+            loadShader(
+                GLES20.GL_VERTEX_SHADER,
+                vertexShaderCode
+            )
+        val fragmentShader =
+            loadShader(
+                GLES20.GL_FRAGMENT_SHADER,
+                fragmentShaderCode
+            )
         myProgram = program
 
         // add the vertex shader to program

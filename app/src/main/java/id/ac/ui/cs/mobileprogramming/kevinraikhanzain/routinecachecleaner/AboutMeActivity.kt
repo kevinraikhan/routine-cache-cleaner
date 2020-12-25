@@ -12,22 +12,17 @@ class AboutMeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Create a GLSurfaceView instance and
         myGLView = MyGLSurfaceView(this)
 
-        // Set it as the ContentView for this Activity.
-//        setContentView(myGLView)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "About Kevin"
-         setContentView(R.layout.activity_about_me)
-
-        // DON'T restore any state information here. Do so in onRestoreInstanceState
+        setContentView(R.layout.activity_about_me)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-
 
 
 }

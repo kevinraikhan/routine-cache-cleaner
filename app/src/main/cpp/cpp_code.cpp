@@ -14,13 +14,6 @@ Java_id_ac_ui_cs_mobileprogramming_kevinraikhanzain_routinecachecleaner_util_Str
     jstring x = (env)->NewStringUTF(ctime(&a));
     return x;
 }
-//Java_id_ac_ui_cs_mobileprogramming_kevinraikhanzain_routinecachecleaner_MainActivity_Method(
-//        JNIEnv *env, jobject /* this */, int number) {
-//    time_t a = 1439467747492 / 1000;
-//    jstring x = (env)->NewStringUTF(ctime(&a));
-//    return x;
-//}
-
 
 
 
